@@ -150,28 +150,6 @@ jobs:
         prerelease: ${{ github.event.inputs.prerelease == 'true' || contains(steps.version.outputs.version, 'alpha') || contains(steps.version.outputs.version, 'beta') || contains(steps.version.outputs.version, 'rc') }}
         files: |
           dist/EdgeCLI-${{ steps.version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}.*
-        body: |
-          ## EdgeCLI ${{ steps.version.outputs.version }}
-
-          ### 下载说明
-          - **Windows**: 下载 `EdgeCLI-*-windows-x64.zip`
-          - **Linux**: 下载 `EdgeCLI-*-linux-x64.tar.gz`
-          - **macOS**: 下载 `EdgeCLI-*-macos-x64.tar.gz`
-
-          ### 使用方法
-          1. 解压下载的文件
-          2. 运行 `EdgeCLI` 可执行文件
-          3. 程序会自动下载所需的 XRay 核心文件
-          4. 按照提示进行配置
-
-          ### 特性
-          - ✅ 使用 Nuitka 编译，启动速度更快
-          - ✅ 集成 UPX 压缩插件，文件体积更小
-          - ✅ Windows 平台使用 MSVC 编译器优化
-          - ✅ 运行时自动下载 XRay 核心文件
-          - ✅ 支持 Windows、Linux、macOS 三大平台
-
-          **完整更新日志**: https://github.com/${{ github.repository }}/compare/${{ github.event.before }}...${{ github.sha }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
