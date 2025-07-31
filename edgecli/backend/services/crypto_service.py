@@ -6,6 +6,8 @@ Crypto Service
 import uuid
 import json
 import base64
+import secrets
+import string
 from datetime import datetime, timedelta
 from cryptography import x509
 from cryptography.x509.oid import NameOID
@@ -21,11 +23,23 @@ class CryptoService:
     def generate_uuid() -> str:
         """
         生成随机 UUID 用于 XRay 客户端 ID
-        
+
         Returns:
             UUID 字符串
         """
         return str(uuid.uuid4())
+
+    @staticmethod
+    def generate_random_path() -> str:
+        """
+        生成随机16位字符串用于路径
+
+        Returns:
+            16位随机字符串
+        """
+        # 使用字母和数字生成16位随机字符串
+        alphabet = string.ascii_letters + string.digits
+        return ''.join(secrets.choice(alphabet) for _ in range(16))
     
     @staticmethod
     def generate_self_signed_cert(domain: str, validity_days: int = 90) -> Tuple[List[str], List[str]]:
@@ -107,12 +121,12 @@ class CryptoService:
     def format_txt_record(client_id: str, domain: str, additional_info: Dict[str, Any] = None) -> str:
         """
         格式化 DNS TXT 记录
-        
+
         Args:
             client_id: 客户端 ID
             domain: 域名
             additional_info: 额外信息
-            
+
         Returns:
             TXT 记录字符串
         """
@@ -121,7 +135,7 @@ class CryptoService:
             "domain": domain,
             "protocol": "vless",
             "port": 443,
-            "path": "/mcproxy"
+            "path": f"/{CryptoService.generate_random_path()}"
         }
         
         if additional_info:
@@ -136,12 +150,12 @@ class CryptoService:
     def format_edge_link(client_id: str, domain: str, additional_info: Dict[str, Any] = None) -> str:
         """
         格式化 edge:// 链接用于便捷分享
-        
+
         Args:
             client_id: 客户端 ID
             domain: 域名
             additional_info: 额外信息
-            
+
         Returns:
             edge:// 链接字符串
         """
@@ -150,7 +164,7 @@ class CryptoService:
             "domain": domain,
             "protocol": "vless",
             "port": 443,
-            "path": "/mcproxy"
+            "path": f"/{CryptoService.generate_random_path()}"
         }
         
         if additional_info:

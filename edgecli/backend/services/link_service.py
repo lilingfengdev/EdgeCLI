@@ -116,6 +116,6 @@ class LinkService:
                 "domain": domain,
                 "protocol": "vless",
                 "port": 443,
-                "path": "/mcproxy"
+                "path": f"/{self.crypto_service.generate_random_path()}"
             }
         }
