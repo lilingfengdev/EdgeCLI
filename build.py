@@ -70,9 +70,7 @@ def get_nuitka_args(target_platform: str, version: str, enable_upx: bool = True)
     # UPX 压缩设置
     if enable_upx:
         args.extend([
-            "--enable-plugin=upx",
-            "--upx-binary=auto",
-            "--upx-compression=best"
+            "--enable-plugin=upx"
         ])
 
     # 平台特定设置
