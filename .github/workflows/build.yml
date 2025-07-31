@@ -24,8 +24,8 @@ on:
 
 env:
   PYTHON_VERSION: '3.13'
-  NUITKA_VERSION: '2.4.8'
-  UPX_VERSION: '4.2.2'
+  NUITKA_VERSION: '2.7.12'
+  UPX_VERSION: '5.0.2'
 
 jobs:
   build:
