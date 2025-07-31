@@ -148,12 +148,11 @@ jobs:
         BRANCH_NAME=${GITHUB_REF#refs/heads/}
         BRANCH_NAME=${BRANCH_NAME//\//-}  # Replace / with -
         COMMIT_HASH=$(git rev-parse --short HEAD)
-        TIMESTAMP=$(date +%Y%m%d-%H%M)
         
         if [[ "$BRANCH_NAME" == "develop" ]]; then
-          VERSION="dev-${COMMIT_HASH}-${TIMESTAMP}"
+          VERSION="dev-${COMMIT_HASH}"
         else
-          VERSION="preview-${BRANCH_NAME}-${COMMIT_HASH}-${TIMESTAMP}"
+          VERSION="preview-${BRANCH_NAME}-${COMMIT_HASH}"
         fi
         
         echo "version=$VERSION" >> $GITHUB_OUTPUT
@@ -216,19 +215,6 @@ jobs:
           - **Windows**: 下载 `EdgeCLI-*-windows-x64.zip`
           - **Linux**: 下载 `EdgeCLI-*-linux-x64.tar.gz`  
           - **macOS**: 下载 `EdgeCLI-*-macos-x64.tar.gz`
-          
-          ### 使用方法
-          1. 解压下载的文件
-          2. 运行 `EdgeCLI` 可执行文件
-          3. 程序会自动下载所需的 XRay 核心文件
-          4. 按照提示进行配置
-          
-          ### 特性
-          - ✅ 使用 Nuitka 编译，启动速度更快
-          - ✅ 集成 UPX 压缩插件，文件体积更小
-          - ✅ Windows 平台使用 MSVC 编译器优化
-          - ✅ 运行时自动下载 XRay 核心文件
-          - ✅ 支持 Windows、Linux、macOS 三大平台
           
           ### 注意事项
           - 这是开发中的版本，可能包含未完成的功能或错误
