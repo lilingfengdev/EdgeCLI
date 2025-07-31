@@ -1,5 +1,8 @@
 name: Preview Build
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
@@ -14,7 +17,7 @@ on:
         default: 'main'
 
 env:
-  PYTHON_VERSION: '3.12'
+  PYTHON_VERSION: '3.13'
   NUITKA_VERSION: '2.4.8'
   UPX_VERSION: '4.2.2'
 
@@ -157,7 +160,7 @@ jobs:
         echo "branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
         echo "Building preview version: $VERSION"
 
-    - name: Build with Nuitka (with UPX compression)
+    - name: Build
       run: |
         python build.py --version ${{ steps.version.outputs.version }} --clean
 

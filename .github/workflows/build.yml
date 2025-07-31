@@ -1,5 +1,8 @@
 name: Release Build
 
+permissions:
+  contents: write
+
 on:
   push:
     tags:
@@ -107,7 +110,7 @@ jobs:
         echo "version=$VERSION" >> $GITHUB_OUTPUT
         echo "Building version: $VERSION"
 
-    - name: Build with Nuitka (with UPX compression)
+    - name: Build
       run: |
         python build.py --version ${{ steps.version.outputs.version }} --clean
 

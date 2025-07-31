@@ -11,11 +11,14 @@ import subprocess
 import shutil
 import platform
 from pathlib import Path
-
 import sys
 import io
+import functools
+
+print = functools.partial(print, flush=True)
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+
 
 
 def detect_platform() -> str:
@@ -82,7 +85,6 @@ def get_nuitka_args(target_platform: str, version: str, enable_upx: bool = True)
     if target_platform == "windows":
         args.extend([
             "--msvc=latest",
-            "--windows-console-mode=disable",
             "--windows-icon-from-ico=assets/icon.ico" if Path("assets/icon.ico").exists() else None
         ])
         # 移除 None 值
