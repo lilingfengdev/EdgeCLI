@@ -16,33 +16,35 @@ class LinkService:
         self.crypto_service = CryptoService()
         self.dns_service = DNSService()
     
-    def generate_txt_record(self, client_id: str, domain: str, additional_info: Dict[str, Any] = None) -> str:
+    def generate_txt_record(self, client_id: str, domain: str, path: str, additional_info: Dict[str, Any] = None) -> str:
         """
         生成 DNS TXT 记录
-        
+
         Args:
             client_id: 客户端 ID
             domain: 域名
+            path: 路径
             additional_info: 额外信息
-            
+
         Returns:
             TXT 记录字符串
         """
-        return self.crypto_service.format_txt_record(client_id, domain, additional_info)
+        return self.crypto_service.format_txt_record(client_id, domain, path, additional_info)
     
-    def generate_edge_link(self, client_id: str, domain: str, additional_info: Dict[str, Any] = None) -> str:
+    def generate_edge_link(self, client_id: str, domain: str, path: str, additional_info: Dict[str, Any] = None) -> str:
         """
         生成 edge:// 链接
-        
+
         Args:
             client_id: 客户端 ID
             domain: 域名
+            path: 路径
             additional_info: 额外信息
-            
+
         Returns:
             edge:// 链接字符串
         """
-        return self.crypto_service.format_edge_link(client_id, domain, additional_info)
+        return self.crypto_service.format_edge_link(client_id, domain, path, additional_info)
     
     def parse_edge_link(self, edge_link: str) -> Dict[str, Any]:
         """
@@ -93,19 +95,20 @@ class LinkService:
         """
         return self.dns_service.get_dns_record_info(domain, txt_record)
     
-    def get_sharing_data(self, client_id: str, domain: str) -> Dict[str, Any]:
+    def get_sharing_data(self, client_id: str, domain: str, path: str) -> Dict[str, Any]:
         """
         获取所有分享数据
 
         Args:
             client_id: 客户端 ID
             domain: 域名
+            path: 路径
 
         Returns:
             分享数据字典
         """
-        txt_record = self.generate_txt_record(client_id, domain)
-        edge_link = self.generate_edge_link(client_id, domain)
+        txt_record = self.generate_txt_record(client_id, domain, path)
+        edge_link = self.generate_edge_link(client_id, domain, path)
 
         return {
             "txt_record": txt_record,
@@ -116,6 +119,6 @@ class LinkService:
                 "domain": domain,
                 "protocol": "vless",
                 "port": 443,
-                "path": f"/{self.crypto_service.generate_random_path()}"
+                "path": path
             }
         }

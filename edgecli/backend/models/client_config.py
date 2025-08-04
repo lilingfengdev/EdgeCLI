@@ -56,7 +56,9 @@ class ClientConfig:
             },
             "inbounds": [
                 {
+                    "listen": "127.0.0.1",
                     "port": self.local_port,
+                    "listen": "127.0.0.1",
                     "protocol": "dokodemo-door",
                     "settings": {
                         "address": "127.0.0.1",

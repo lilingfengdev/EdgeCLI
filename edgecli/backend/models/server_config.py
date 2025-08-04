@@ -10,7 +10,7 @@ from dataclasses import dataclass, asdict
 @dataclass
 class ServerConfig:
     """服务端配置模型"""
-    
+
     name: str
     frontend_host: str
     backend_ip: str
@@ -18,6 +18,7 @@ class ServerConfig:
     client_id: str
     certificate: List[str]
     private_key: List[str]
+    path: str
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ServerConfig':
@@ -37,7 +38,8 @@ class ServerConfig:
             backend_port=data['backend_port'],
             client_id=data['client_id'],
             certificate=data['certificate'],
-            private_key=data['private_key']
+            private_key=data['private_key'],
+            path=data['path']
         )
     
     def to_dict(self) -> Dict[str, Any]:
@@ -79,7 +81,7 @@ class ServerConfig:
                         "xhttpSettings": {
                             "host": self.frontend_host,
                             "mode": "auto",
-                            "path": "/mcproxy",
+                            "path": self.path,
                             "scMaxBufferedPosts": 200,
                             "scStreamUpServerSecs": "20-80"
                         },
@@ -119,7 +121,7 @@ class ServerConfig:
             "domain": self.frontend_host,
             "protocol": "vless",
             "port": 443,
-            "path": "/mcproxy"
+            "path": self.path
         }
     
     def validate(self) -> List[str]:

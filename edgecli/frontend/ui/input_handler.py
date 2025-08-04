@@ -203,7 +203,7 @@ class InputHandler:
             console.print("\n[bold yellow]选项:[/bold yellow]")
             console.print("• 输入序号选择现有配置")
             console.print("• 输入 'new' 创建新配置")
-            if config_type == "client":
+            if config_type == "client" or config_type == "客户端":
                 console.print("• 输入 'edge' 从 Edge 链接导入配置")
             console.print("• 输入 'back' 返回主菜单")
 
@@ -216,8 +216,8 @@ class InputHandler:
                 if choice.lower() == 'back':
                     return None
                 elif choice.lower() == 'new':
-                    return None
-                elif choice.lower() == 'edge' and config_type == "client":
+                    return 'new'
+                elif choice.lower() == 'edge' and (config_type == "client" or config_type == "客户端"):
                     return 'edge'
 
                 try:
@@ -228,14 +228,14 @@ class InputHandler:
                         console.print("[red]❌ 无效的序号，请重新输入[/red]")
                 except ValueError:
                     valid_options = ["'new'", "'back'"]
-                    if config_type == "client":
+                    if config_type == "client" or config_type == "客户端":
                         valid_options.append("'edge'")
                     console.print(f"[red]❌ 请输入有效的数字或 {', '.join(valid_options)}[/red]")
         else:
             console.print(f"[yellow]📝 暂无{config_type}配置[/yellow]")
             console.print("\n[bold yellow]选项:[/bold yellow]")
             console.print("• 输入 'new' 创建新配置")
-            if config_type == "client":
+            if config_type == "client" or config_type == "客户端":
                 console.print("• 输入 'edge' 从 Edge 链接导入配置")
             console.print("• 输入 'back' 返回主菜单")
             
@@ -248,12 +248,12 @@ class InputHandler:
                 if choice.lower() == 'back':
                     return None
                 elif choice.lower() == 'new':
-                    return None
-                elif choice.lower() == 'edge' and config_type == "client":
+                    return 'new'
+                elif choice.lower() == 'edge' and (config_type == "client" or config_type == "客户端"):
                     return 'edge'
                 else:
                     valid_options = ["'new'", "'back'"]
-                    if config_type == "client":
+                    if config_type == "client" or config_type == "客户端":
                         valid_options.append("'edge'")
                     console.print(f"[red]❌ 请输入 {', '.join(valid_options)}[/red]")
     

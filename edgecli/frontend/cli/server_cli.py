@@ -96,8 +96,9 @@ class ServerCLI:
         # 生成安全凭据
         console.print("\n[cyan]🔐 正在生成安全凭据...[/cyan]")
         client_id = self.crypto_service.generate_uuid()
+        random_path = f"/{self.crypto_service.generate_random_path()}"
         cert_lines, key_lines = self.crypto_service.generate_self_signed_cert(config_data["frontend_host"])
-        
+
         # 创建配置对象
         server_config = ServerConfig(
             name=config_data["name"],
@@ -106,7 +107,8 @@ class ServerCLI:
             backend_port=config_data["backend_port"],
             client_id=client_id,
             certificate=cert_lines,
-            private_key=key_lines
+            private_key=key_lines,
+            path=random_path
         )
         
         # 保存配置
@@ -165,7 +167,8 @@ class ServerCLI:
         # 获取分享数据
         sharing_data = self.link_service.get_sharing_data(
             connection_info["id"],
-            connection_info["domain"]
+            connection_info["domain"],
+            connection_info["path"]
         )
 
         # 显示说明
@@ -189,7 +192,8 @@ class ServerCLI:
         # 获取分享数据
         sharing_data = self.link_service.get_sharing_data(
             connection_info["id"],
-            connection_info["domain"]
+            connection_info["domain"],
+            connection_info["path"]
         )
 
         # 显示说明

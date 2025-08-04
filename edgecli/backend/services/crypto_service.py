@@ -118,13 +118,14 @@ class CryptoService:
         return cert_lines, key_lines
     
     @staticmethod
-    def format_txt_record(client_id: str, domain: str, additional_info: Dict[str, Any] = None) -> str:
+    def format_txt_record(client_id: str, domain: str, path: str, additional_info: Dict[str, Any] = None) -> str:
         """
         格式化 DNS TXT 记录
 
         Args:
             client_id: 客户端 ID
             domain: 域名
+            path: 路径
             additional_info: 额外信息
 
         Returns:
@@ -135,25 +136,26 @@ class CryptoService:
             "domain": domain,
             "protocol": "vless",
             "port": 443,
-            "path": f"/{CryptoService.generate_random_path()}"
+            "path": path
         }
-        
+
         if additional_info:
             record_data.update(additional_info)
-        
+
         # 创建紧凑的 JSON 字符串
         txt_content = json.dumps(record_data, separators=(',', ':'))
-        
+
         return f"v=edgecli1; {txt_content}"
     
     @staticmethod
-    def format_edge_link(client_id: str, domain: str, additional_info: Dict[str, Any] = None) -> str:
+    def format_edge_link(client_id: str, domain: str, path: str, additional_info: Dict[str, Any] = None) -> str:
         """
         格式化 edge:// 链接用于便捷分享
 
         Args:
             client_id: 客户端 ID
             domain: 域名
+            path: 路径
             additional_info: 额外信息
 
         Returns:
@@ -164,18 +166,18 @@ class CryptoService:
             "domain": domain,
             "protocol": "vless",
             "port": 443,
-            "path": f"/{CryptoService.generate_random_path()}"
+            "path": path
         }
-        
+
         if additional_info:
             record_data.update(additional_info)
-        
+
         # 创建紧凑的 JSON 字符串
         json_content = json.dumps(record_data, separators=(',', ':'))
-        
+
         # 编码为 base64
         base64_content = base64.b64encode(json_content.encode('utf-8')).decode('ascii')
-        
+
         return f"edge://{base64_content}"
     
     @staticmethod
