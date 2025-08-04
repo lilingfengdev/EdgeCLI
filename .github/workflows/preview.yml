@@ -191,36 +191,3 @@ jobs:
         path: |
           dist/EdgeCLI-${{ steps.version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}.*
         retention-days: 7
-
-    - name: Create Preview Release
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: ${{ steps.version.outputs.version }}
-        name: 🚧 EdgeCLI Preview ${{ steps.version.outputs.version }}
-        draft: false
-        prerelease: true
-        files: |
-          dist/EdgeCLI-${{ steps.version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}.*
-        body: |
-          ## 🚧 EdgeCLI Preview Release
-          
-          **⚠️ 这是一个预览版本，仅用于测试目的，不建议在生产环境中使用。**
-          
-          ### 构建信息
-          - **分支**: `${{ steps.version.outputs.branch }}`
-          - **提交**: `${{ github.sha }}`
-          - **构建时间**: `${{ github.run_number }}`
-          
-          ### 下载说明
-          - **Windows**: 下载 `EdgeCLI-*-windows-x64.zip`
-          - **Linux**: 下载 `EdgeCLI-*-linux-x64.tar.gz`  
-          - **macOS**: 下载 `EdgeCLI-*-macos-x64.tar.gz`
-          
-          ### 注意事项
-          - 这是开发中的版本，可能包含未完成的功能或错误
-          - 预览版本会定期清理，请及时下载测试
-          - 如发现问题，请在 Issues 中反馈
-          
-          **提交详情**: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
